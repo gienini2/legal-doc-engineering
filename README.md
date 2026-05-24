@@ -86,12 +86,20 @@ The user prompt provides:
 
 ## Sample outputs (anonymised)
 
-| Report | Type | Complexity |
-|--------|------|-----------|
-| [S-03 — Traffic accident](demos/S-03_accident_anonymised.pdf) | Collision report, 2 vehicles, 1 minor injury | Legal citation, accident diagram, services log |
-| [S-04 — Parked vehicle control](demos/S-04_vehicle_control_anonymised.pdf) | 22 vehicles inspected, 49 photos | Systematic damage inventory per vehicle |
-| [S-05 — Illegal waste dumping](demos/S-05_illegal_waste_anonymised.pdf) | Public space inspection | Itemised inventory, public health risk assessment |
-| [S-11 — Road obstruction](demos/S-11_road_obstruction_anonymised.pdf) | 8h20m road closure, large vehicle breakdown | 7 coded infractions, subsidiary cost recovery claim |
+Each report used a different pipeline depending on volume and complexity:
+
+| Report | Type | Pipeline | Complexity |
+|--------|------|---------|-----------|
+| [S-03 — Traffic accident](demos/S-03_accident_anonymised.pdf) | Collision, 2 vehicles, 1 minor injury | Photos + field notes → Claude | Legal citation, accident diagram, services log |
+| [S-04 — Parked vehicle control](demos/S-04_vehicle_control_anonymised.pdf) | 22 vehicles inspected, 49 photos | ChatGPT Vision (damage per photo) → Word → Claude (professional register) | Multi-model pipeline, systematic damage inventory |
+| [S-05 — Illegal waste dumping](demos/S-05_illegal_waste_anonymised.pdf) | Public space inspection | Photos + inspection notes → Claude | Itemised inventory, public health risk assessment |
+| [S-11 — Road obstruction](demos/S-11_road_obstruction_anonymised.pdf) | 8h20m road closure, large vehicle breakdown | Field notes + SCT infraction JSON + municipal ordinances PDF → Claude | 7 coded infractions across 3 normative sources, subsidiary cost recovery |
+
+### S-04 preview
+
+![S-04 Parked Vehicle Control Report](demos/S-04_preview.png)
+
+The S-04 pipeline is the only one using multi-model architecture: GPT-4 Vision handled the visual damage assessment across 49 photos (where cost and volume made it the practical choice), the results were compiled into Word, then Claude refined the administrative register to official quality. Each model used for what it does best.
 
 ---
 
